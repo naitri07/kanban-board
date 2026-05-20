@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Taskflow — Kanban Board</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <div class="logo">
+        <span class="logo-mark">⬡</span>
+        <span class="logo-text">Taskflow</span>
+      </div>
+      <div class="project-badge">
+        <span class="project-dot"></span>
+        <span id="project-name">My Workspace</span>
+        <button class="edit-project-btn" id="editProjectBtn" title="Edit project name">✎</button>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="stats-row">
+        <span class="stat"><span id="total-count">0</span> tasks</span>
+        <span class="stat-divider">·</span>
+        <span class="stat done-stat"><span id="done-count">0</span> done</span>
+      </div>
+      <button class="btn-primary" id="addCardBtn">
+        <span>+</span> New Task
+      </button>
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">☽</button>
+    </div>
+  </header>
+
+  <!-- Board -->
+  <main class="board" id="board">
+
+    <div class="column" data-column="backlog">
+      <div class="column-header">
+        <div class="column-title-row">
+          <span class="column-dot dot-backlog"></span>
+          <h2 class="column-title">Backlog</h2>
+          <span class="column-count" id="count-backlog">0</span>
+        </div>
+        <button class="col-add-btn" data-column="backlog" title="Add task">+</button>
+      </div>
+      <div class="cards-container" id="col-backlog" data-column="backlog"></div>
+    </div>
+
+    <div class="column" data-column="todo">
+      <div class="column-header">
+        <div class="column-title-row">
+          <span class="column-dot dot-todo"></span>
+          <h2 class="column-title">To Do</h2>
+          <span class="column-count" id="count-todo">0</span>
+        </div>
+        <button class="col-add-btn" data-column="todo" title="Add task">+</button>
+      </div>
+      <div class="cards-container" id="col-todo" data-column="todo"></div>
+    </div>
+
+    <div class="column" data-column="inprogress">
+      <div class="column-header">
+        <div class="column-title-row">
+          <span class="column-dot dot-inprogress"></span>
+          <h2 class="column-title">In Progress</h2>
+          <span class="column-count" id="count-inprogress">0</span>
+        </div>
+        <button class="col-add-btn" data-column="inprogress" title="Add task">+</button>
+      </div>
+      <div class="cards-container" id="col-inprogress" data-column="inprogress"></div>
+    </div>
+
+    <div class="column" data-column="review">
+      <div class="column-header">
+        <div class="column-title-row">
+          <span class="column-dot dot-review"></span>
+          <h2 class="column-title">Review</h2>
+          <span class="column-count" id="count-review">0</span>
+        </div>
+        <button class="col-add-btn" data-column="review" title="Add task">+</button>
+      </div>
+      <div class="cards-container" id="col-review" data-column="review"></div>
+    </div>
+
+    <div class="column" data-column="done">
+      <div class="column-header">
+        <div class="column-title-row">
+          <span class="column-dot dot-done"></span>
+          <h2 class="column-title">Done</h2>
+          <span class="column-count" id="count-done">0</span>
+        </div>
+        <button class="col-add-btn" data-column="done" title="Add task">+</button>
+      </div>
+      <div class="cards-container" id="col-done" data-column="done"></div>
+    </div>
+
+  </main>
+
+  <!-- Modal: Add / Edit Task -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">New Task</h3>
+        <button class="modal-close" id="modalClose">✕</button>
+      </div>
+      <div class="modal-body">
+        <label class="field-label">Title <span class="req">*</span></label>
+        <input type="text" class="field-input" id="taskTitle" placeholder="What needs to be done?" maxlength="80" />
+
+        <label class="field-label">Description</label>
+        <textarea class="field-input field-textarea" id="taskDesc" placeholder="Add more context..." rows="3" maxlength="300"></textarea>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label">Priority</label>
+            <select class="field-input field-select" id="taskPriority">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+              <option value="critical">Critical</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Column</label>
+            <select class="field-input field-select" id="taskColumn">
+              <option value="backlog">Backlog</option>
+              <option value="todo">To Do</option>
+              <option value="inprogress">In Progress</option>
+              <option value="review">Review</option>
+              <option value="done">Done</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label">Tag</label>
+            <select class="field-input field-select" id="taskTag">
+              <option value="">None</option>
+              <option value="Design">Design</option>
+              <option value="Dev">Dev</option>
+              <option value="Research">Research</option>
+              <option value="Bug">Bug</option>
+              <option value="Feature">Feature</option>
+              <option value="Docs">Docs</option>
+              <option value="Testing">Testing</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Due Date</label>
+            <input type="date" class="field-input field-select" id="taskDue" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" id="modalCancel">Cancel</button>
+        <button class="btn-primary" id="modalSave">Save Task</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirm -->
+  <div class="modal-overlay" id="deleteOverlay">
+    <div class="modal modal-sm" id="deleteModal">
+      <div class="modal-header">
+        <h3 class="modal-title">Delete Task?</h3>
+        <button class="modal-close" id="deleteClose">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="delete-msg">This action cannot be undone. The task will be permanently removed.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" id="deleteCancelBtn">Keep it</button>
+        <button class="btn-danger" id="deleteConfirmBtn">Yes, delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
