@@ -2,6 +2,10 @@
 
 A production-grade Kanban task manager built with **pure HTML, CSS, and JavaScript** — no frameworks, no build tools, no dependencies.
 
+# Project Live Demo
+
+Live Demo Link: (https://zesty-puppy-e7411a.netlify.app/)
+
 ## 🚀 Getting Started
 
 No installation required. Just open the file:
