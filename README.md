@@ -4,7 +4,7 @@ A production-grade Kanban task manager built with **pure HTML, CSS, and JavaScri
 
 # Project Live Demo
 
-Live Demo Link: (https://zesty-puppy-e7411a.netlify.app/)
+Live Demo Link: (https://kaban-board-e7411a.netlify.app/)
 
 ## 🚀 Getting Started
 
