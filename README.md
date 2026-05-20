@@ -2,10 +2,6 @@
 
 A production-grade Kanban task manager built with **pure HTML, CSS, and JavaScript** — no frameworks, no build tools, no dependencies.
 
-> Perfect for your portfolio or resume as it demonstrates DOM mastery, drag-and-drop API, local storage, and clean UI/UX design.
-
----
-
 ## 🚀 Getting Started
 
 No installation required. Just open the file:
